@@ -21,14 +21,19 @@ var floor = function(number) {
 // This one rounds up. Your solution may differ from mine. 
 // Just make sure it works.
 var ceiling = function(number) {
-
+  var r = number % 1;
+  var d = (number - r + 1) - number;
+  if(d === 1) {
+  	return number
+  }
+  return number < 0 ? number - r : number + d; 
 };
 
 
 /**  Math.abs  **/
 // This one simply returns the absolute value of a number.
 var abs = function(number) {
-
+  return number < 0 ? -number : number;
 };
 
 
@@ -36,7 +41,19 @@ var abs = function(number) {
 // JavaScript doesn't have an exponent operator, so you need `Math.pow`
 // to raise a number to a power. Too bad you can't use that.
 var pow = function(base, exponent) {
-
+  if (exponent === 0) {return 1}
+  var result = base;
+  if (exponent > 0){
+  	for(i = 1; i < exponent; i++) {
+	  result = result * base;
+  	}
+  } else {
+  	for(i = 1; i <= -exponent; i++) {
+      result = result * base;
+  	}
+  	result = base / result;
+  }
+  return result;
 };
 
 
@@ -44,7 +61,7 @@ var pow = function(base, exponent) {
 // Normally this compares any number of numbers and returns the 
 // largest. Let's make a version that just compares two.
 var max = function(x, y) {
-
+  return x > y ? x : y;
 };
 
 
@@ -52,5 +69,9 @@ var max = function(x, y) {
 // I bet you can guess what this one is suppossed to do. This time,
 // use the `arguments` keyword so that you can compare more than two.
 var min = function() {
-
+  var result = arguments[0];
+  for(var i = 1; i < arguments.length; i++) {
+    arguments[i] < result ? result = arguments[i] : result = result;
+  }
+  return result;
 };
