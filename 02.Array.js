@@ -30,21 +30,38 @@ var pop = function(array) {
 // Just the opposite of `pop`, this adds a new value to the end 
 // of an array, and returns the new length.
 var push = function(array, value) {
-
+  array[array.length] = value;
+  return array.length;
 };
 
 
 /**  Array.prototype.shift  **/
 // Removes the first element from an array. Won't be as simple as `pop`.
 var shift = function(array) {
+  var first = array[0];
 
+  for(var i = 1; i < array.length; i++) {
+    array[i-1] = array[i];
+    console.log(array)
+  }
+
+  if (array.length > 0)
+    array.length--;
+
+  return first;
 };
 
 
 /**  Array.prototype.unshift  **/
 // You may sense a pattern. This adds an value to the start of an array.
-var unshift = function(array, value) {
+var unshift = function(array, value) { 
+  for(var i = array.length; i > 1; i--) {
+    array[i] =  array[i - 1];
+  }
 
+  array[0] = value;
+  
+  return array.length;
 };
 
 
@@ -52,7 +69,14 @@ var unshift = function(array, value) {
 // Combines an array of sub-strings with an optional separator string 
 // inbetween each. The separator should default to a comma.
 var join = function(array, separator) {
+  separator = separator || ',';
+  var result = array[0] + '' || '';
 
+  for(var i = 1; i < array.length; i++) {
+      result += separator + array[i];
+  }
+  
+  return result;
 };
 
 
@@ -79,5 +103,29 @@ var reverse = function(array) {
 // This combines any number of sub-arrays into a new larger array. 
 // You may find previous functions useful here too!
 var concat = function() {
+  var result = [];
+  var count = 0
 
+  if(arguments.length < 2) {
+    return result;
+  }
+
+  for(var i = 0; i < arguments.length; i++) {
+    if(typeof arguments[i] === 'number') {
+      result[count] = arguments[i];
+      count++;
+    }
+    for(var j = 0; j < arguments[i].length; j++) {
+      if(typeof arguments[i] === 'string') {
+        result[count] = arguments[i];
+        count++
+        break;
+      } else {
+        result[count] = arguments[i][j];
+        count++
+      }     
+    }
+  }
+
+  return result;
 };
